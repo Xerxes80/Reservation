@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Hot Restaurant</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container">
+	<div class="jumbotron">
+	<h1 style="text-align: center;">Hot Restaurant</h1>
+	<h3 style="text-align: center;">Current Reservations and Waiting List</h3>
+	<div class="button-group" style="text-align: center;">
+    <a href="/reservation"><button type="button" class="btn btn-danger btn-lg"><span class="glyphicon "></span> Make a reservation</button></a>
+    <a href="/"><button type="button" class="btn btn-default btn-lg"><span class="glyphicon "></span> Home</button></a>
+	<!--<button class="btn btn-primary btn-lg" id="view" type="button">Make Reservation</button>
+	<button class="btn btn-primary btn-lg" id="reserve" type="button">Home</button>-->
+	</div>
+	</div>
+</div>
+<div class="container">
+	<div class="row">
+	<div class="col-lg-12">
+	<div class="display">
+		<div class="panel panel-default">
+		<div class="panel-heading">Current Reservations</div>
+		<div class="panel-body">
+             <div id="well-section1">
+
+             </div>
+		</div>
+		</div>
+        <div class="panel panel-default">
+		<div class="panel-heading">Waiting List</div>
+		<div class="panel-body">
+             <div id="well-section2">
+                
+             </div>
+		</div>
+		</div>
+	</div>
+        <a href="/api/passengerList">API Table Link</a> | <a href="/api/waitingList">API Wait List</a>
+	</div>
+	</div>
+    <br><br>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+
+function view(){
+    
+    console.log("the view works");
+	$.get("/api/passengerList", function(data){
+        console.log(data);
+		if (data){
+			for(var i=0; i<data.length; i++){
+//                $("#well-section1").append("<div class= 'well' id='srticle-well' ><h4>"+data[i].uniqueID +"<h4></div>");
+                $("#well-section1").append("<div class= 'well row' ><div class='bg-primary col-xs-1'><h4> "+(i+1)+"<h4></div><div class='col-lg-11'><h4> "+"  | "+data[i].uniqueID +"<h4></div></div>");
+			}
+		}
+	});
+    console.log("the view works");
+	$.get("/api/waitingList", function(data){
+        console.log(data);
+		if (data){
+			for(var i=0; i<data.length; i++){
+                $("#well-section2").append("<div class= 'well row' ><div class='bg-primary col-xs-1'><h4> "+(i+1)+"<h4></div><div class='col-lg-11'><h4> "+"  | "+data[i].uniqueID +"<h4></div></div>");
+			}
+		}
+	});
+}
+view();
+});
+</script>
+</body>
+<html>
